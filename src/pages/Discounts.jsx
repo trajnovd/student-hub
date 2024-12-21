@@ -39,7 +39,7 @@ function DiscountsMap() {
             position={[discount.latitude, discount.longitude]}
           >
             <Popup>
-              <h3>{discount.title + " " + discount.discount_percent + "%"}</h3>
+              <h3>{discount.title + " "}</h3>
               <p>{discount.description}</p>
             </Popup>
           </Marker>

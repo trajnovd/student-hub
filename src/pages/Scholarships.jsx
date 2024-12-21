@@ -1,5 +1,11 @@
+import ScholarshipList from "../features/scholarships/ScholarshipList";
+
 function Scholarships() {
-  return <div>Scholarships page</div>;
+  return (
+    <div>
+      <ScholarshipList />
+    </div>
+  );
 }
 
 export default Scholarships;

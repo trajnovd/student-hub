@@ -4,7 +4,8 @@ export async function fetchDiscounts() {
   const { data, error } = await supabase.from("discounts").select("*");
 
   if (error) {
-    console.error("Error fetching discounts:", error);
+    console.error("Error fetching discounts:", error.message);
+    throw error;
   }
 
   return data;

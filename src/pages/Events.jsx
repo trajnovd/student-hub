@@ -1,9 +1,11 @@
+import EventList from "../features/events/EventList";
+
 function Events() {
-    return (
-        <div>
-            Events page
-        </div>
-    )
+  return (
+    <div>
+      <EventList />
+    </div>
+  );
 }
 
-export default Events
+export default Events;

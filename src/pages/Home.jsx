@@ -1,5 +1,11 @@
+import HomeEvents from "../features/home/HomeEvents";
+
 function Home() {
-  return <div>Home Page</div>;
+  return (
+    <div>
+      <HomeEvents />
+    </div>
+  );
 }
 
 export default Home;

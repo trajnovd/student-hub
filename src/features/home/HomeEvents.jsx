@@ -11,7 +11,9 @@ const HomeScreen = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-      <h1 className="text-3xl font-bold mb-6">Upcoming Events Nearby</h1>
+      <h1 className="text-4xl font-bold mb-6 text-indigo-600">
+        Upcoming Events Nearby
+      </h1>
 
       <a
         href="./events"

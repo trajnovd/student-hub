@@ -17,11 +17,7 @@ function Title() {
         transition={{ duration: 1 }}
       >
         {/* Logo above the title */}
-        <img
-          src="./src/assets/logo.png"
-          alt="Logo"
-          className="w-96 h-96 ml-14 -mt-32"
-        />
+        <img src="./logo.png" alt="Logo" className="w-96 h-96 ml-14 -mt-32" />
 
         <motion.h1
           className="text-6xl font-extrabold text-white mt-4"

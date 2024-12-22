@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import DiscountPopup from "./DiscountPopup";
-import { useFetchDiscounts } from "./useDiscounts";
+import { customIcon, useFetchDiscounts } from "./useDiscounts";
 import Spinner from "../../ui/Spinner";
 import { useSearchParams } from "react-router-dom";
 
@@ -52,9 +52,11 @@ function DiscountsMap({ selectedDiscount }) {
       />
 
       {filteredDiscounts.map((discount) => (
+        //customIcons=customIcon(discount);
         <Marker
           key={discount.id}
           position={[discount.latitude, discount.longitude]}
+          icon={customIcon(discount)}
         >
           <DiscountPopup discount={discount} />
         </Marker>

@@ -9,7 +9,7 @@ function Title() {
   };
 
   return (
-    <section className="h-screen flex items-center justify-center bg-gradient-to-r from-indigo-500 to-purple-600">
+    <section className="h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-600">
       <motion.div
         className="text-center"
         initial={{ opacity: 0, y: 50 }}

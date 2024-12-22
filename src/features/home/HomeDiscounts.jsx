@@ -3,7 +3,9 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { useFetchDiscounts } from "../discounts/useDiscounts";
 import DiscountCard from "../discounts/DiscountCard";
-
+import Spinner from "../../ui/Spinner";
+import { customIcon } from "../discounts/useDiscounts";
+import DiscountPopup from "../discounts/DiscountPopup";
 function HomeDiscounts() {
   const { data: discounts = [], isLoading, error } = useFetchDiscounts();
   const [selectedDiscount, setSelectedDiscount] = useState(null);
@@ -14,7 +16,7 @@ function HomeDiscounts() {
     setSelectedDiscount(discount);
   };
 
-  const defaultPosition = [41.99818, 21.425415];
+  const defaultPosition = [41.995764, 21.430505];
   const totalPages = Math.ceil(discounts.length / discountsPerPage);
 
   const handleNextPage = () => {
@@ -30,7 +32,7 @@ function HomeDiscounts() {
     (currentPage + 1) * discountsPerPage
   );
 
-  if (isLoading) return <p className="text-center">Loading discounts...</p>;
+  if (isLoading) return <Spinner />;
   if (error)
     return <p className="text-center text-red-500">Error loading discounts.</p>;
 
@@ -44,8 +46,11 @@ function HomeDiscounts() {
           <div className="md:w-2/3">
             <MapContainer
               center={defaultPosition}
-              zoom={13}
+              zoom={16}
               style={{ height: "400px", borderRadius: "12px" }}
+              scrollWheelZoom={false}
+              zoomControl={false}
+              doubleClickZoom={false}
             >
               <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -56,13 +61,9 @@ function HomeDiscounts() {
                 <Marker
                   key={discount.id}
                   position={[discount.latitude, discount.longitude]}
+                  icon={customIcon(discount)}
                 >
-                  <Popup>
-                    <div className="p-4">
-                      <h3 className="text-lg font-bold">{discount.title}</h3>
-                      <p>{discount.description}</p>
-                    </div>
-                  </Popup>
+                  <DiscountPopup discount={discount} />
                 </Marker>
               ))}
             </MapContainer>

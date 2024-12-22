@@ -1,14 +1,19 @@
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import DiscountPopup from "./DiscountPopup";
-import { useFetchDiscounts } from "./useDiscounts";
+import { customIcon, useFetchDiscounts } from "./useDiscounts";
+import Spinner from "../../ui/Spinner";
+import { useSearchParams } from "react-router-dom";
+
 function DiscountsMap({ selectedDiscount }) {
   const mapRef = useRef();
   const defaultPosition = [41.99818, 21.425415];
-
-  // Fetch discounts using React Query
   const { data: discounts = [], isLoading, error } = useFetchDiscounts();
+  const [searchParams] = useSearchParams();
+
+  // Get the filter from URL
+  const filter = searchParams.get("category") || "All";
 
   // Center the map on the selected discount
   useEffect(() => {
@@ -20,14 +25,19 @@ function DiscountsMap({ selectedDiscount }) {
     }
   }, [selectedDiscount]);
 
-  // Handle loading and error states
   if (isLoading) {
-    return <p className="text-center">Loading discounts...</p>;
+    return <Spinner />;
   }
 
   if (error) {
     return <p className="text-center text-red-500">Error loading discounts.</p>;
   }
+
+  // Filter discounts for map markers
+  const filteredDiscounts =
+    filter === "All"
+      ? discounts
+      : discounts.filter((discount) => discount.Type === filter);
 
   return (
     <MapContainer
@@ -41,10 +51,12 @@ function DiscountsMap({ selectedDiscount }) {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
 
-      {discounts.map((discount) => (
+      {filteredDiscounts.map((discount) => (
+        //customIcons=customIcon(discount);
         <Marker
           key={discount.id}
           position={[discount.latitude, discount.longitude]}
+          icon={customIcon(discount)}
         >
           <DiscountPopup discount={discount} />
         </Marker>

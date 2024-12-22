@@ -3,7 +3,6 @@ import HomeEvents from "../features/home/HomeEvents";
 import HomeNewsletter from "../features/home/HomeNewsletter";
 import HomeScholarships from "../features/home/HomeScholarships";
 import Title from "../features/home/Title";
-import CreateStudentForm from "../features/newsletter/CreateStudentForm";
 
 function Home() {
   return (

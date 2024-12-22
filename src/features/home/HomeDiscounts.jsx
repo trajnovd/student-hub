@@ -1,15 +1,18 @@
-import { useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { useState, useEffect } from "react";
+import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { useFetchDiscounts } from "../discounts/useDiscounts";
 import DiscountCard from "../discounts/DiscountCard";
 import Spinner from "../../ui/Spinner";
 import { customIcon } from "../discounts/useDiscounts";
 import DiscountPopup from "../discounts/DiscountPopup";
+
 function HomeDiscounts() {
   const { data: discounts = [], isLoading, error } = useFetchDiscounts();
   const [selectedDiscount, setSelectedDiscount] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
+  const [fadeIn, setFadeIn] = useState(false); // Used to trigger fade-in effect
+  const [fadeOut, setFadeOut] = useState(false); // Used to trigger fade-out effect
   const discountsPerPage = 2;
 
   const handleCardClick = (discount) => {
@@ -31,6 +34,33 @@ function HomeDiscounts() {
     currentPage * discountsPerPage,
     (currentPage + 1) * discountsPerPage
   );
+
+  // Auto-scroll the discounts every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      handleNextPage();
+    }, 5450); // Scroll every 5 seconds
+
+    return () => clearInterval(interval); // Cleanup on unmount or when dependencies change
+  }, [discounts, totalPages]);
+
+  // Trigger fade-in and fade-out effects when currentPage changes
+  useEffect(() => {
+    setFadeIn(true); // Start fade-in
+    const fadeInTimer = setTimeout(() => {
+      setFadeIn(false); // After fade-in, wait 5 seconds before fading out
+      setFadeOut(true); // Trigger fade-out after 5 seconds of visibility
+    }, 5000); // Wait for fade-in to complete (500ms)
+
+    const stayTimer = setTimeout(() => {
+      setFadeOut(false); // Reset fade-out after 5 seconds, cards will stay visible for 5 seconds
+    }, 5500); // Cards stay visible for 5 seconds (500ms for fade-in + 5000ms for visibility)
+
+    return () => {
+      clearTimeout(fadeInTimer);
+      clearTimeout(stayTimer);
+    };
+  }, [currentPage]);
 
   if (isLoading) return <Spinner />;
   if (error)
@@ -68,27 +98,27 @@ function HomeDiscounts() {
               ))}
             </MapContainer>
           </div>
-          <div className="md:w-1/3 grid gap-6">
-            {paginatedDiscounts.map((discount) => (
-              <DiscountCard
-                key={discount.id}
-                discount={discount}
-                onClick={handleCardClick}
-              />
-            ))}
-            <div className="flex justify-between mt-6">
-              <button
-                onClick={handlePrevPage}
-                className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-lg hover:bg-indigo-500"
-              >
-                Previous
-              </button>
-              <button
-                onClick={handleNextPage}
-                className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-lg hover:bg-indigo-500"
-              >
-                Next
-              </button>
+          <div className="md:w-1/3">
+            {/* Container for the discount cards */}
+            <div className="discounts-wrapper flex flex-col gap-6">
+              {paginatedDiscounts.map((discount, index) => (
+                <a
+                  href="./Discounts"
+                  key={discount.id}
+                  className={`transition-opacity duration-500 ease-in-out ${
+                    fadeIn
+                      ? "opacity-100"
+                      : fadeOut
+                      ? "opacity-0"
+                      : "opacity-100"
+                  }`}
+                  style={{
+                    transitionDelay: `${index * 0.1}s`, // Stagger the fade effect slightly
+                  }}
+                >
+                  <DiscountCard discount={discount} onClick={handleCardClick} />
+                </a>
+              ))}
             </div>
           </div>
         </div>

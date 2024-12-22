@@ -1,9 +1,14 @@
-import { useEffect, useRef } from "react";
+import { useRef, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import { useFetchDiscounts } from "./useDiscounts";
 
-function DiscountsMap({ discounts, selectedDiscount }) {
+function DiscountsMap({ selectedDiscount }) {
   const mapRef = useRef();
+  const defaultPosition = [41.99818, 21.425415];
+
+  // Fetch discounts using React Query
+  const { data: discounts = [], isLoading, error } = useFetchDiscounts();
 
   // Center the map on the selected discount
   useEffect(() => {
@@ -15,7 +20,14 @@ function DiscountsMap({ discounts, selectedDiscount }) {
     }
   }, [selectedDiscount]);
 
-  const defaultPosition = [41.99818, 21.425415];
+  // Handle loading and error states
+  if (isLoading) {
+    return <p className="text-center">Loading discounts...</p>;
+  }
+
+  if (error) {
+    return <p className="text-center text-red-500">Error loading discounts.</p>;
+  }
 
   return (
     <MapContainer
@@ -35,12 +47,16 @@ function DiscountsMap({ discounts, selectedDiscount }) {
           position={[discount.latitude, discount.longitude]}
         >
           <Popup>
-            {discount.discount_percent ? (
-              <h3>{discount.title + " " + discount.discount_percent + "%"}</h3>
-            ) : (
-              <h3>{discount.title}</h3>
-            )}
-            <p>{discount.description}</p>
+            <div className="p-4 rounded-lg">
+              {discount.discount_percent ? (
+                <h3 className="text-lg font-bold">
+                  {discount.title} - {discount.discount_percent}%
+                </h3>
+              ) : (
+                <h3 className="text-lg font-bold">{discount.title}</h3>
+              )}
+              <p className="mt-2">{discount.description}</p>
+            </div>
           </Popup>
         </Marker>
       ))}

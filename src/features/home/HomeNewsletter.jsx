@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useStudents } from "../newsletter/useStudents";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 function HomeNewsletter() {
   const {
@@ -108,6 +108,7 @@ function HomeNewsletter() {
             {isLoading ? "Submitting..." : "Subscribe"}
           </button>
         </div>
+        <ToastContainer position="top-center" />
       </form>
     </div>
   );

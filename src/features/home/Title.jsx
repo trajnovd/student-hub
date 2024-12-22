@@ -9,21 +9,29 @@ function Title() {
   };
 
   return (
-    <section className="h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-600">
+    <section className="h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-600 ">
       <motion.div
         className="text-center"
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
       >
+        {/* Logo above the title */}
+        <img
+          src="./src/assets/logo.png"
+          alt="Logo"
+          className="w-96 h-96 ml-14 -mt-32"
+        />
+
         <motion.h1
-          className="text-6xl font-extrabold text-white"
+          className="text-6xl font-extrabold text-white mt-4"
           initial={{ scale: 0.5 }}
           animate={{ scale: 1 }}
           transition={{ duration: 0.8, type: "spring", stiffness: 100 }}
         >
           Student Hub
         </motion.h1>
+
         <motion.p
           className="mt-4 text-xl text-white/90"
           initial={{ opacity: 0 }}

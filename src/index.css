@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.popup-food .leaflet-popup-content-wrapper {
+  background-color: #f56565; /* Red background */
+}
+
+.popup-culture .leaflet-popup-content-wrapper {
+  background-color: #4299e1; /* Blue background */
+}
+
+.popup-gym .leaflet-popup-content-wrapper {
+  background-color: #48bb78; /* Green background */
+}

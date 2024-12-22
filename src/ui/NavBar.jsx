@@ -18,7 +18,7 @@ function Navbar() {
     { path: "/events", name: "Events" },
     { path: "/discounts", name: "Discounts" },
     { path: "/scholarships", name: "Scholarships" },
-    { path: "/map", name: "Map" },
+    { path: "/newsletter", name: "Newsletter" },
   ];
 
   return (

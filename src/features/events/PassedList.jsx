@@ -1,54 +1,50 @@
 import React, { useState } from "react";
-import { empty, useFetchEvents, Page } from "./useEvents";
+import { useFetchEvents, empty, Page } from "./useEvents";
 import EventCard from "./EventCard";
 import dayjs from "dayjs";
-function EventList({ category }) {
+function PassedList() {
   const { data: events = [], isLoading, error } = useFetchEvents();
   const [currentPage, setCurrentPage] = useState(1);
   const eventsPerPage = 3; // 3 per row, 2 rows
-  const upcomingEvents = events.filter((event) =>
-    dayjs(event.date).isAfter(dayjs())
-  );
-  // events.forEach((event) => {
-  //   console.log(
-  //     event.id,
-  //     "Event Date:",
-  //     event.date,
-  //     "Valid:",
-  //     dayjs(event.date).isValid()
-  //   );
-  // });
-  // Pagination Logic
-  const totalPages = Math.ceil(
-    upcomingEvents.filter((event) => event.category == category).length /
-      eventsPerPage
+  events.forEach((event) => {
+    console.log(
+      event.id,
+      "Event Date:",
+      event.date,
+      "Valid:",
+      dayjs(event.date).isValid()
+    );
+  });
+  const upcomingEvents = events.filter(
+    (event) => dayjs(event.date).isBefore(dayjs(), "day") // Compare by date only
   );
 
+  // Pagination Logic
+  const totalPages = Math.ceil(upcomingEvents.length / eventsPerPage);
   const startIndex = (currentPage - 1) * eventsPerPage;
-  const currentEvents = upcomingEvents
-    .filter((event) => event.category == category)
-    .slice(startIndex, startIndex + eventsPerPage);
+  const currentEvents = upcomingEvents.slice(
+    startIndex,
+    startIndex + eventsPerPage
+  );
 
   const nextPage = () =>
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
   const prevPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
-  const n = currentEvents.filter((event) => event.category == category).length;
+  const n = currentEvents.length;
   if (isLoading) return <p className="text-center">Loading events...</p>;
   if (error)
     return <p className="text-center text-red-500">Error loading events.</p>;
-  const title = category == "Party" ? "Partie" : category;
+
   return (
     <div className="p-10">
       {empty(n) && (
-        <h1 className="text-4xl font-bold text-center mb-10">{title}s</h1>
+        <h1 className="text-4xl font-bold text-center mb-10">Past Events</h1>
       )}
       {empty(n) && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {currentEvents
-            .filter((event) => event.category == category)
-            .map((event) => (
-              <EventCard key={event.id} event={event} />
-            ))}
+          {currentEvents.map((event) => (
+            <EventCard key={event.id} event={event} />
+          ))}
         </div>
       )}
       {/* Pagination Controls */}
@@ -82,5 +78,4 @@ function EventList({ category }) {
     </div>
   );
 }
-
-export default EventList;
+export default PassedList;

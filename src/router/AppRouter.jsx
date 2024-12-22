@@ -7,9 +7,6 @@ import Events from "../pages/Events";
 import Discounts from "../pages/Discounts";
 import Scholarships from "../pages/Scholarships";
 
-// Simulate authentication logic
-const isAuthenticated = true; // Replace with actual logic later
-
 function AppRouter() {
   return (
     <BrowserRouter>

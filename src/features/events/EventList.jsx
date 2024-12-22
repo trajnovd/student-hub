@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { empty, useFetchEvents, Page } from "./useEvents";
 import EventCard from "./EventCard";
 import dayjs from "dayjs";
+
 function EventList({ category }) {
   const { data: events = [], isLoading, error } = useFetchEvents();
   const [currentPage, setCurrentPage] = useState(1);
@@ -25,7 +26,7 @@ function EventList({ category }) {
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
   const prevPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
   const n = currentEvents.filter((event) => event.category === category).length;
-  if (isLoading) return <p className="text-center">Loading events...</p>;
+  if (isLoading) return " ";
   if (error)
     return <p className="text-center text-red-500">Error loading events.</p>;
   const title = category === "Party" ? "Partie" : category;

@@ -3,6 +3,7 @@ import { useFetchScholarships } from "./useScholarships";
 import ScholarshipCard from "./ScholarshipCard";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import dayjs from "dayjs";
+import Spinner from "../../ui/Spinner";
 
 function ScholarshipList() {
   const { data: scholarships = [], isLoading, error } = useFetchScholarships();
@@ -29,7 +30,7 @@ function ScholarshipList() {
     );
   };
 
-  if (isLoading) return <p className="text-center">Loading scholarships...</p>;
+  if (isLoading) return <Spinner />;
   if (error)
     return (
       <p className="text-center text-red-500">Error loading scholarships.</p>

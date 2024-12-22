@@ -16,7 +16,7 @@ function DiscountList() {
 
   return (
     <div className="p-6">
-      <DiscountsMap discounts={discounts} selectedDiscount={selectedDiscount} />
+      <DiscountsMap selectedDiscount={selectedDiscount} />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
         {discounts.map((discount) => (
           <DiscountCard

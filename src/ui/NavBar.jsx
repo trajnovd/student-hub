@@ -15,11 +15,10 @@ function Navbar() {
 
   const links = [
     { path: "/", name: "Home" },
-    { path: "/map", name: "Map" },
     { path: "/events", name: "Events" },
     { path: "/discounts", name: "Discounts" },
     { path: "/scholarships", name: "Scholarships" },
-    { path: "/roomates", name: "Roommates" },
+    { path: "/map", name: "Map" },
   ];
 
   return (

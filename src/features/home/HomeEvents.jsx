@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import EventCard from "../events/EventCard";
 import { useFetchEvents } from "../events/useEvents";
 import Spinner from "../../ui/Spinner";
+import { Link } from "react-router-dom";
 
 const HomeScreen = () => {
   const { data: events, isLoading, error } = useFetchEvents();
@@ -16,8 +17,8 @@ const HomeScreen = () => {
         Upcoming Events Nearby
       </h1>
 
-      <a
-        href="./events"
+      <Link
+        to="/events"
         className="flex overflow-x-auto gap-4 mt-6 w-full max-w-4xl p-4 bg-white shadow-md rounded-lg"
       >
         {events
@@ -26,7 +27,7 @@ const HomeScreen = () => {
           .map((event) => (
             <EventCard key={event.id} event={event} />
           ))}
-      </a>
+      </Link>
     </div>
   );
 };

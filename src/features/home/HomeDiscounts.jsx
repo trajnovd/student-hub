@@ -6,6 +6,7 @@ import DiscountCard from "../discounts/DiscountCard";
 import Spinner from "../../ui/Spinner";
 import { customIcon } from "../discounts/useDiscounts";
 import DiscountPopup from "../discounts/DiscountPopup";
+import { Link } from "react-router-dom";
 
 function HomeDiscounts() {
   const { data: discounts = [], isLoading, error } = useFetchDiscounts();
@@ -102,8 +103,8 @@ function HomeDiscounts() {
             {/* Container for the discount cards */}
             <div className="discounts-wrapper flex flex-col gap-6">
               {paginatedDiscounts.map((discount, index) => (
-                <a
-                  href="./Discounts"
+                <Link
+                  to="/discounts"
                   key={discount.id}
                   className={`transition-opacity duration-500 ease-in-out ${
                     fadeIn
@@ -117,7 +118,7 @@ function HomeDiscounts() {
                   }}
                 >
                   <DiscountCard discount={discount} onClick={handleCardClick} />
-                </a>
+                </Link>
               ))}
             </div>
           </div>

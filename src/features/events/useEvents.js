@@ -34,3 +34,10 @@ export function useDeleteEvent() {
     },
   });
 }
+//Length of array
+export function empty(n) {
+  return n != 0;
+}
+export function Page(n) {
+  return n > 1;
+}

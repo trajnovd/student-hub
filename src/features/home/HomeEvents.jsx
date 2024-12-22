@@ -2,11 +2,12 @@ import React from "react";
 import dayjs from "dayjs";
 import EventCard from "../events/EventCard";
 import { useFetchEvents } from "../events/useEvents";
+import Spinner from "../../ui/Spinner";
 
 const HomeScreen = () => {
   const { data: events, isLoading, error } = useFetchEvents();
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Spinner />;
   if (error) return <p>Error: {error.message}</p>;
 
   return (

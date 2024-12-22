@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { useFetchDiscounts } from "../discounts/useDiscounts";
 import DiscountCard from "../discounts/DiscountCard";
+import Spinner from "../../ui/Spinner";
 
 function HomeDiscounts() {
   const { data: discounts = [], isLoading, error } = useFetchDiscounts();
@@ -30,7 +31,7 @@ function HomeDiscounts() {
     (currentPage + 1) * discountsPerPage
   );
 
-  if (isLoading) return <p className="text-center">Loading discounts...</p>;
+  if (isLoading) return <Spinner />;
   if (error)
     return <p className="text-center text-red-500">Error loading discounts.</p>;
 

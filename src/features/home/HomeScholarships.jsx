@@ -4,6 +4,7 @@ import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import dayjs from "dayjs";
 import { useFetchScholarships } from "../scholarships/useScholarships";
 import ScholarshipCard from "../scholarships/ScholarshipCard";
+import Spinner from "../../ui/Spinner";
 
 function HomeScholarships() {
   const { data: scholarships = [], isLoading, error } = useFetchScholarships();
@@ -30,7 +31,7 @@ function HomeScholarships() {
     );
   };
 
-  if (isLoading) return <p className="text-center">Loading scholarships...</p>;
+  if (isLoading) return <Spinner />;
   if (error)
     return (
       <p className="text-center text-red-500">Error loading scholarships.</p>

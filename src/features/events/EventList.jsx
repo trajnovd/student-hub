@@ -9,34 +9,26 @@ function EventList({ category }) {
   const upcomingEvents = events.filter((event) =>
     dayjs(event.date).isAfter(dayjs())
   );
-  // events.forEach((event) => {
-  //   console.log(
-  //     event.id,
-  //     "Event Date:",
-  //     event.date,
-  //     "Valid:",
-  //     dayjs(event.date).isValid()
-  //   );
-  // });
+
   // Pagination Logic
   const totalPages = Math.ceil(
-    upcomingEvents.filter((event) => event.category == category).length /
+    upcomingEvents.filter((event) => event.category === category).length /
       eventsPerPage
   );
 
   const startIndex = (currentPage - 1) * eventsPerPage;
   const currentEvents = upcomingEvents
-    .filter((event) => event.category == category)
+    .filter((event) => event.category === category)
     .slice(startIndex, startIndex + eventsPerPage);
 
   const nextPage = () =>
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
   const prevPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
-  const n = currentEvents.filter((event) => event.category == category).length;
+  const n = currentEvents.filter((event) => event.category === category).length;
   if (isLoading) return <p className="text-center">Loading events...</p>;
   if (error)
     return <p className="text-center text-red-500">Error loading events.</p>;
-  const title = category == "Party" ? "Partie" : category;
+  const title = category === "Party" ? "Partie" : category;
   return (
     <div className="p-10">
       {empty(n) && (
@@ -45,7 +37,7 @@ function EventList({ category }) {
       {empty(n) && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {currentEvents
-            .filter((event) => event.category == category)
+            .filter((event) => event.category === category)
             .map((event) => (
               <EventCard key={event.id} event={event} />
             ))}

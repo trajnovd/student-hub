@@ -1,8 +1,8 @@
-import { useRef, useEffect } from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { useEffect, useRef } from "react";
+import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import DiscountPopup from "./DiscountPopup";
 import { useFetchDiscounts } from "./useDiscounts";
-
 function DiscountsMap({ selectedDiscount }) {
   const mapRef = useRef();
   const defaultPosition = [41.99818, 21.425415];
@@ -46,18 +46,7 @@ function DiscountsMap({ selectedDiscount }) {
           key={discount.id}
           position={[discount.latitude, discount.longitude]}
         >
-          <Popup>
-            <div className="p-4 rounded-lg">
-              {discount.discount_percent ? (
-                <h3 className="text-lg font-bold">
-                  {discount.title} - {discount.discount_percent}%
-                </h3>
-              ) : (
-                <h3 className="text-lg font-bold">{discount.title}</h3>
-              )}
-              <p className="mt-2">{discount.description}</p>
-            </div>
-          </Popup>
+          <DiscountPopup discount={discount} />
         </Marker>
       ))}
     </MapContainer>

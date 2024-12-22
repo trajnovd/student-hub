@@ -2,10 +2,10 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AppLayout from "../ui/AppLayout";
 import Home from "../pages/Home";
-import Map from "../pages/Map";
 import Events from "../pages/Events";
 import Discounts from "../pages/Discounts";
 import Scholarships from "../pages/Scholarships";
+import Newsletter from "../pages/Newsletter";
 
 function AppRouter() {
   return (
@@ -14,10 +14,10 @@ function AppRouter() {
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<Home />} />
-          <Route path="/map" element={<Map />} />
           <Route path="/events" element={<Events />} />
           <Route path="/discounts" element={<Discounts />} />
           <Route path="/scholarships" element={<Scholarships />} />
+          <Route path="/newsletter" element={<Newsletter />} />
           {/* <Route
             path="/login"
             element={

@@ -6,15 +6,7 @@ function PassedList() {
   const { data: events = [], isLoading, error } = useFetchEvents();
   const [currentPage, setCurrentPage] = useState(1);
   const eventsPerPage = 3; // 3 per row, 2 rows
-  events.forEach((event) => {
-    console.log(
-      event.id,
-      "Event Date:",
-      event.date,
-      "Valid:",
-      dayjs(event.date).isValid()
-    );
-  });
+
   const upcomingEvents = events.filter(
     (event) => dayjs(event.date).isBefore(dayjs(), "day") // Compare by date only
   );

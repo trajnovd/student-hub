@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-
+import DiscountPopup from "./DiscountPopup";
 function DiscountsMap({ discounts, selectedDiscount }) {
   const mapRef = useRef();
 
@@ -34,14 +34,7 @@ function DiscountsMap({ discounts, selectedDiscount }) {
           key={discount.id}
           position={[discount.latitude, discount.longitude]}
         >
-          <Popup>
-            {discount.discount_percent ? (
-              <h3>{discount.title + " " + discount.discount_percent + "%"}</h3>
-            ) : (
-              <h3>{discount.title}</h3>
-            )}
-            <p>{discount.description}</p>
-          </Popup>
+          <DiscountPopup discount={discount} />
         </Marker>
       ))}
     </MapContainer>
